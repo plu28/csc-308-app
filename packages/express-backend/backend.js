@@ -51,6 +51,19 @@ const findUserById = (id) => {
 	);
 };
 
+const addUser = (user) => {
+	users["users_list"].push(user);
+	return user;
+}
+
+// Add a user to the users list
+app.post("/users", (req, res) => {
+	const userToAdd = req.body;
+	console.log(userToAdd);
+	addUser(userToAdd);
+	res.send();
+});
+
 // Get a user by an id
 app.get("/users/:id", (req, res) => {
 	const id = req.params.id;

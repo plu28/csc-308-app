@@ -11,16 +11,21 @@ function MyApp() {
 
   useEffect(() => {
     fetchUsers()
-    .then((res) => res.json())
-    .then((json) => setCharacters(json["users_list"]))
-    .catch((error) => { console.log(error); })
+      .then((res) => res.json())
+      .then((json) => setCharacters(json["users_list"]))
+      .catch((error) => { console.log(error); })
   }, []);
 
   function removeOneCharacter(index) {
-    const updated = characters.filter((character, i) => {
-      return i !== index;
-    });
-    setCharacters(updated);
+    const deleteID = characters.filter((character, i) => {
+      return i === index;
+    })[0].id;
+    deleteUser(deleteID)
+      .then(() => {
+        const updated = characters.filter(character => character.id !== deleteID);
+        setCharacters(updated);
+    })
+      .catch((error) => {console.log(error)});
   }
 
   function updateList(person) {
@@ -48,6 +53,11 @@ function MyApp() {
       },
       body: JSON.stringify(person)
     });
+    return promise;
+  }
+
+  function deleteUser(id) {
+    const promise = fetch(`${BACKEND_URL}/users/${id}`, { method: "DELETE" });
     return promise;
   }
 

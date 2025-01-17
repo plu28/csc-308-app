@@ -87,10 +87,10 @@ app.delete("/users/:id", (req, res) => {
 	let deletedUser = delUserById(id);
 	console.log(deletedUser);
 	if (deletedUser) {
-		console.log("sent 200");
-		res.status(200).send();
+		console.log("successfully deleted user");
+		res.status(204).send();
 	} else {
-		console.log("sent 404");
+		console.log("could not find user to delete");
 		return res.status(404).send("Resource not found");
 	}
 	res.send();

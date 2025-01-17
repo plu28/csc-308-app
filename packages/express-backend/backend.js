@@ -69,6 +69,7 @@ const delUserById = (userId) => {
 }
 
 const addUser = (user) => {
+	user.id = Math.floor(Math.random() * 10000000).toString();
 	users["users_list"].push(user);
 	return user;
 }
@@ -76,8 +77,9 @@ const addUser = (user) => {
 // Add a user to the users list
 app.post("/users", (req, res) => {
 	const userToAdd = req.body;
-	addUser(userToAdd);
-	res.send();
+	const addedUser = addUser(userToAdd)
+	console.log(addedUser)
+	res.status(201).send(addedUser);
 });
 
 app.delete("/users/:id", (req, res) => {

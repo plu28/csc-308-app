@@ -12,7 +12,6 @@ mongoose
 
 // im beginning to think all these userModel methods just return promises
 function getUsers(name, job) {
-	console.log("testing")
 	let promise;
 	if (name === undefined && job === undefined) {
 		promise = userModel.find();
@@ -60,5 +59,6 @@ export default {
 	findUserById,
 	addUser,
 	findUserByName,
-	findUserByJob
+	findUserByJob,
+	deleteUserById
 };

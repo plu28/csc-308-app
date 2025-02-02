@@ -1,19 +1,21 @@
-import express from 'express';
-import userServices from './user-services.js';
+import express from "express";
+import cors from "cors";
+import userServices from './user-services.js'
 
 const app = express();
 const port = 8000;
 
+app.use(cors());
 app.use(express.json());
 
 app.get('/', (req, res) => {
 	res.send('Hello World!');
 });
 
+
 // Add a user to the users list
 app.post('/users', (req, res) => {
 	const userToAdd = req.body;
-
 	userServices.addUser(userToAdd)
 	.then(() => {
 		res.status(200).send();

@@ -12,7 +12,7 @@ const UserSchema = new mongoose.Schema(
 		job: {
 			type: String,
 			required: true,
-			trim: true
+			trim: true,
 			// extra validate function ?
 			validate(value) {
 				if (value.length < 2)

@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import userModel from './user';
+import userModel from './user.js';
 
 mongoose.set('debug', true);
 
@@ -12,23 +12,24 @@ mongoose
 
 // im beginning to think all these userModel methods just return promises
 function getUsers(name, job) {
+	console.log("testing")
 	let promise;
 	if (name === undefined && job === undefined) {
 		promise = userModel.find();
+	} else if (name && job) {
+		promise = findUserByNameJob(name, job);
 	} else if (name && !job) {
 		promise = findUserByName(name);
 	} else if (job && !name) {
-		promise = findUserByjob(job);
+		promise = findUserByJob(job);
 	}
 	return promise;
 }
 
-// not sure why this doesn't return a promise? or maybe it does o:
 function findUserById(id) {
 	return userModel.findById(id);
 }
 
-// returns a promise of the user being saved?
 function addUser(user) {
 	const userToAdd = new userModel(user);
 	const promise = userToAdd.save();
@@ -44,6 +45,14 @@ function findUserByName(name) {
 
 function findUserByJob(job) {
 	return userModel.find({ job: job });
+}
+
+function findUserByNameJob(name, job) {
+	return userModel.find({ job: job, name: name });
+}
+
+function deleteUserById(id) {
+	return userModel.findByIdAndDelete(id);
 }
 
 export default {
